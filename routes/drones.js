@@ -63,11 +63,11 @@ router.get('/drones/:id/edit', (req, res, next) => {
 router.post('/drones/:id/edit', (req, res, next) => {
   // Iteration #4: Update the drone
   
-  Drone.findByIdAndUpdate(req.params.id),{
+  Drone.findByIdAndUpdate(req.params.id,{
     name: req.body.name,
     propellers: req.body.propellers,
     maxSpeed: req.body.maxSpeed
-  }
+  })
   .then(()=>{
 
    res.redirect("/drones")
@@ -82,6 +82,14 @@ router.post('/drones/:id/edit', (req, res, next) => {
 router.post('/drones/:id/delete', (req, res, next) => {
   // Iteration #5: Delete the drone
   // ... your code here
+  console.log("borrando", req.params)
+  Drone.findByIdAndDelete(req.params.id)
+  .then(() =>{
+    res.redirect("/drones")
+  })
+.catch((error) => {
+  next(error)
+})
 });
 
 module.exports = router;
